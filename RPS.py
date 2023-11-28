@@ -7,7 +7,7 @@ computer_score = 0
 game = 'y'
 player = input('Welcome to Rock, Paper, Scissors. Select an option: ')
 
-def player_win():
+def player_win(): # If the player wins the round
    global player
    global computer
    global player_score
@@ -16,14 +16,18 @@ def player_win():
       computer = c[randint(0, 2)]
       player = input('Pick another option: ')
    elif player_score == 3:
-      print('Congratulations! You won!')
+      print('Congratulations! You won! :)')
       game = input('Do you want to play again? (y = yes) ')
       if game == 'y':
          player_score = 0
          computer_score = 0
          player = input('Welcome to Rock, Paper, Scissors. Select an option: ')
+      elif game == 'n':
+         game_over()
+      else:
+         game = input('Please select y or n: ')
 
-def player_lose():
+def player_lose(): # If the player loses the round
    global player
    global computer
    global player_score
@@ -33,17 +37,33 @@ def player_lose():
        player = input('Pick another option: ')
    elif computer_score == 3:
       print('You lost! :(')
-      game = input('Do you want to play again? (y = yes) ')
+      game = input('Do you want to play again? (y = yes, n = no) ')
       if game == 'y':
          player_score = 0
          computer_score = 0
          player = input('Welcome to Rock, Paper, Scissors. Select an option: ')
+      elif game == 'n':
+         game_over()
+      else:
+         game = input('Please select y or n: ')
+
+def player_draw():  # If the round is a draw
+   global player
+   global computer
+   global player_score
+   global computer_score
+
+   computer = c[randint(0, 2)]
+   player = input('Pick another option: ')
+
+def game_over(): # Occurs if the player selects 'n' when asked to play again
+   print('Thanks for playing!')
 
 while (player_score and computer_score) < 3 and game == 'y': # First to 3 points wins       
    if player == computer:
       print("It's a draw!")
       print("Player Score:", player_score, " Computer Score:", computer_score)
-      player = input('Pick another option: ')
+      player_draw()
    if player == 'Rock' and computer == 'Scissors': 
       player_score += 1
       print('You win! ' + player + ' smashes ' + computer.lower() + '.')
